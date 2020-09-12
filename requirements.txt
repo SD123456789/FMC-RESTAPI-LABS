@@ -1,0 +1,12 @@
+certifi
+cffi
+chardet
+cryptography
+graphviz
+idna
+pycparser
+pyOpenSSL
+PyYAML
+requests
+six
+urllib3
