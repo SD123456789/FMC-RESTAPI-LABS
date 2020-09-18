@@ -77,22 +77,24 @@ if __name__ == "__main__":
         for netObjs in file:
             netObj = netObjs.strip().split(',')
             try: # try block in case something unexpected occurs
-                payload.append({'name': netObj[0],
-                    'value': netObj[1],
-                    'description': netObj[2],
-                    'overridable': netObj[3],
-                    'type': netObj[4]})
+                netObject = f'{{"name": "{netObj[0]}","value": "{netObj[1]}","overridable": {netObj[2]},"description": "{netObj[3]}","type": "{netObj[4]}"}}'
+                payload.append(json.loads(netObject))
+
             except Exception as err:
                 raise SystemExit(err)
-
+    
+    print(json.dumps(payload, indent=4))
     # now to POST our list of network objects
-    print(header)
-    print(payload)
     try:
         r = requests.post(f"https://{ip}/{path}", headers=header, 
-            data=json.dumps(payload), verify=False)
+            data=f'{payload}', verify=False)
         
-        print(r.status_code)
+
+        print(r.request.body)
+        print("Headers: " + str(r.headers) + "\n")
+        print("Text: " + str(r.text) + "\n")
+        print("Status Code: " + str(r.status_code))
+
     except requests.exceptions.HTTPError as errh:
         raise SystemExit(errh)
     except requests.exceptions.RequestException as err:
