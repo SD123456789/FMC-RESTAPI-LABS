@@ -6,6 +6,8 @@ Outputs: none
 
 To use this file as a standalone script the username, password, & FMC IP
 will need to be populated in the __main__ section below.
+
+H/T: namiagar@cisco.com for assistance in troubleshooting this script
 """
 
 # include the necessary modules
@@ -68,7 +70,7 @@ if __name__ == "__main__":
 
     # call the token generating function and populate our header
     header = get_token(ip, path, u, p)
-
+    print(header)
     # we need to update our path to account for the domain UUID as follows
     path = f"/api/fmc_config/v1/domain/{header['DOMAIN_UUID']}/object/networks?bulk=true"
 
@@ -82,12 +84,13 @@ if __name__ == "__main__":
 
             except Exception as err:
                 raise SystemExit(err)
-    
+                
+    header_f = {"accept": "application/json", "Content-Type": "application/json", "X-auth-access-token": header['X-auth-access-token']}
+
     print(json.dumps(payload, indent=4))
     # now to POST our list of network objects
     try:
-        r = requests.post(f"https://{ip}/{path}", headers=header, 
-            data=f'{payload}', verify=False)
+        r = requests.post(f"https://{ip}/{path}", headers=header_f, data=json.dumps(payload), verify=False)
         
 
         print(r.request.body)
