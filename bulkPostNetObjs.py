@@ -61,7 +61,7 @@ if __name__ == "__main__":
     # set needed variables to generate a token
     u = "apiUser"
     p = "Firepower~!"
-    ip = "ip.of.fmc"
+    ip = "ip.of.fmc:44327"
     path = "/api/fmc_platform/v1/auth/generatetoken"
     header = {} # don't need to instantiate this, but doing so for clarity
     payload = [] # don't need to instantiate this, but doing so for clarity
