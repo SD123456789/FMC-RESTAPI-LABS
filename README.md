@@ -77,6 +77,12 @@ optional arguments:
 Please go to the DevNet Learning Lab for Firepower Management Center (FMC) to learn how to use these scripts:  
 https://developer.cisco.com/learning/modules/fmc-api
 
+
+### DevNet Sandbox
+
+The Sandbox which can implement this script is at:
+https://devnetsandbox.cisco.com/RM/Diagram/Index/1228cb22-b2ba-48d3-a70a-86a53f4eecc0?diagramType=Topology
+
 ## Getting help
 
 If you have questions, concerns, bug reports, etc., please create an issue against this repository.
