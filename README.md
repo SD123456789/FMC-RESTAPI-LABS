@@ -83,6 +83,6 @@ If you have questions, concerns, bug reports, etc., please create an issue again
 
 ## Author(s)
 
-This project was written and is maintained by the following individuals:  
+This project was written and is maintained by the following individual(s):  
 
 * Sudhir H. Desai <suddesai@cisco.com>
