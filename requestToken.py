@@ -10,9 +10,7 @@ will need to be populated in the __main__ section below.
 
 # include the necessary modules
 import argparse
-import json
 import requests
-import textwrap
 
 """
 function: get_token(fmcIP, path, username, password)

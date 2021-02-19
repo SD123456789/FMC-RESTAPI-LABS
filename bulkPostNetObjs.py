@@ -1,11 +1,16 @@
 #!/usr/bin/python3
 """
 File: bulkPostNetObjs.py
-Inputs: CSV file with network objects for a bulk import
-Outputs: none
+Inputs:
+    Username
+    Password
+    FMC IP Address
+    CSV file with network objects for a bulk import
+Outputs: 
+    none
 
-To use this file as a standalone script the username, password, & FMC IP
-will need to be populated in the __main__ section below.
+To use this file as a standalone script, the username, password, & FMC IP
+will need to be passed in as command-line arguments.
 
 H/T: namiagar@cisco.com for assistance in troubleshooting this script
 """

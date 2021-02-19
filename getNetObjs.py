@@ -1,18 +1,21 @@
 #!/usr/bin/python3
 """
 File: getNetObjs.py
-Inputs: none
-Outputs: print a list of network objects to screen
+Inputs: 
+    Username
+    Password
+    FMC IP Address
+Outputs: 
+    a list of network objects printed to screen
 
-To use this file as a standalone script the username, password, & FMC IP
-will need to be populated in the __main__ section below.
+To use this file as a standalone script, the username, password, & FMC IP
+will need to be passed in as command-line arguments.
 """
 
 # include the necessary modules
 import argparse
 import json
 import requests
-import textwrap
 import requestToken as token
 
 
