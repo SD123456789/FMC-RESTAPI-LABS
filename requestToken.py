@@ -9,7 +9,10 @@ will need to be populated in the __main__ section below.
 """
 
 # include the necessary modules
+import argparse
+import json
 import requests
+import textwrap
 
 """
 function: get_token(fmcIP, path, username, password)
@@ -69,12 +72,19 @@ def refresh_token(fmcIP, path, header):
 
 # if used as a stand-alone script, run the following
 if __name__ == "__main__":
+    # first set up the command line arguments and parse them
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("username", type=str, help ="API username")
+    parser.add_argument("password", type=str, help="password of API user")
+    parser.add_argument("ip_address", type=str, help="IP of FMC")
+    args = parser.parse_args()
+
     # set needed variables to generate a token
-    u = "apiUser"
-    p = "Firepower~!"
-    ip = "ip.of.fmc:44327"
+    u = args.username
+    p = args.password
+    ip = args.ip_address
     path = "/api/fmc_platform/v1/auth/generatetoken"
-    header = {} # don't need to instantiate this here, but doing so for clarity
 
     # call the token generating function and populate our header
     header = get_token(ip, path, u, p)

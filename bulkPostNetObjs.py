@@ -15,33 +15,7 @@ import argparse
 import json
 import requests
 import textwrap
-
-"""
-function: get_token(fmcIP, path, username, password)
-use: generates a list of necessary headers to be included with all 
-    subsequent requests
-
-inputs: IP of FMC, path to API, API user, API password
-returns: access token, refresh token, domain uuid
-"""
-def get_token(fmcIP, path, username, password):
-    # lets disable the certificate warning first (this is NOT advised in prod)
-    from requests.packages.urllib3.exceptions import InsecureRequestWarning
-    requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-
-    # send request with a try/catch block to handle errors safely
-    try:
-        r = requests.post(f"https://{fmcIP}/{path}", auth=(f"{username}", 
-            f"{password}"), verify=False) # always verify the SSL cert in prod!
-    except requests.exceptions.HTTPError as errh:
-        raise SystemExit(errh)
-    except requests.exceptions.RequestException as err:
-        raise SystemExit(err)
-
-    # return the request token
-    required_headers = ('X-auth-access-token', 'X-auth-refresh-token', 'DOMAIN_UUID')
-    result = {key: r.headers.get(key) for key in required_headers}
-    return result
+import requestToken as token
 
 
 # if we're using this as a stand-alone script, run the following
@@ -49,27 +23,29 @@ if __name__ == "__main__":
     # first set up the command line arguments and parse them
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("username", type=str, help ="API username")
+    parser.add_argument("password", type=str, help="password of API user")
+    parser.add_argument("ip_address", type=str, help="IP of FMC")
     parser.description = textwrap.dedent('''\
 ...         input file formatting – one name per line
 ...         --------------------------------
 ...         name,value,description,overridable,type
     ''')
-
     parser.add_argument("csvInput", type=str,
         help="provide the csv of network objects \
             to add.")
     args = parser.parse_args()
 
     # set needed variables to generate a token
-    u = "apiUser"
-    p = "Firepower~!"
-    ip = "ip.of.fmc:44327"
+    u = args.username
+    p = args.password
+    ip = args.ip_address
     path = "/api/fmc_platform/v1/auth/generatetoken"
     header = {} # don't need to instantiate this, but doing so for clarity
     payload = [] # don't need to instantiate this, but doing so for clarity
 
     # call the token generating function and populate our header
-    header = get_token(ip, path, u, p)
+    header = token.get_token(ip, path, u, p)
     print(header)
     # we need to update our path to account for the domain UUID as follows
     path = f"/api/fmc_config/v1/domain/{header['DOMAIN_UUID']}/object/networks?bulk=true"
